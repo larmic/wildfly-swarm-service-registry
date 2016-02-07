@@ -11,7 +11,7 @@
 
     <artifactId>registry</artifactId>
 
-    <name>service registry</name>
+    <name>registry</name>
     <description>service registry</description>
 
     <packaging>war</packaging>
