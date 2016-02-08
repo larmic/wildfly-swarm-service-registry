@@ -15,6 +15,12 @@
     </modules>
 
     <properties>
+        <maven.min.version>3.2.1</maven.min.version>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <wildfly-swarm.version>1.0.0.Alpha8</wildfly-swarm.version>
         <resteasy-client.version>3.0.14.Final</resteasy-client.version>
     </properties>
@@ -49,6 +55,16 @@
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
                 <artifactId>jaxrs-weld</artifactId>
+                <version>${wildfly-swarm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>jaxrs-jaxb</artifactId>
+                <version>${wildfly-swarm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.swarm</groupId>
+                <artifactId>jpa</artifactId>
                 <version>${wildfly-swarm.version}</version>
             </dependency>
             <dependency>
