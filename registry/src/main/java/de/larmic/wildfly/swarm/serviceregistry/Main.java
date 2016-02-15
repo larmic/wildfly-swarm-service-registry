@@ -5,11 +5,16 @@ import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.wildfly.swarm.container.Container;
 import org.wildfly.swarm.datasources.DatasourcesFraction;
 import org.wildfly.swarm.jaxrs.JAXRSArchive;
+import org.wildfly.swarm.jaxrs.JAXRSFraction;
 import org.wildfly.swarm.jpa.JPAFraction;
+import org.wildfly.swarm.weld.WeldFraction;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Container container = new Container();
+
+        container.fraction(new WeldFraction());
+        container.fraction(new JAXRSFraction());
 
         container.fraction(new DatasourcesFraction()
                         .jdbcDriver("h2", (d) -> {
@@ -36,6 +41,9 @@ public class Main {
         JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
+        deployment.addClass(Application.class);
+        deployment.addClass(MyApplication.class);
+        deployment.addClass(ApplicationResource.class);
         deployment.addAllDependencies();
 
         container.deploy(deployment);
