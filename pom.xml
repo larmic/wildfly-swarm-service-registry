@@ -23,6 +23,7 @@
 
         <wildfly-swarm.version>1.0.0.Alpha8</wildfly-swarm.version>
         <resteasy-client.version>3.0.14.Final</resteasy-client.version>
+        <h2.version>1.4.187</h2.version>
     </properties>
 
     <build>
@@ -69,7 +70,7 @@
             </dependency>
             <dependency>
                 <groupId>org.wildfly.swarm</groupId>
-                <artifactId>logging</artifactId>
+                <artifactId>undertow</artifactId>
                 <version>${wildfly-swarm.version}</version>
             </dependency>
             <dependency>
@@ -77,6 +78,11 @@
                 <artifactId>resteasy-client</artifactId>
                 <version>${resteasy-client.version}</version>
                 <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${h2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

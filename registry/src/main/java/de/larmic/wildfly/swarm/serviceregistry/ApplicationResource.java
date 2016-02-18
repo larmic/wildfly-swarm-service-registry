@@ -18,8 +18,8 @@ public class ApplicationResource {
     @GET
     @Produces({"application/json", "application/xml"})
     public Response get() {
-        final List<Application> applications = em.createNamedQuery("Application.findAll", Application.class).getResultList();
-        final GenericEntity<List<Application>> listGenericEntity = new GenericEntity<List<Application>>(applications) {};
+        final List<ApplicationEntity> applications = em.createNamedQuery("Application.findAll", ApplicationEntity.class).getResultList();
+        final GenericEntity<List<ApplicationEntity>> listGenericEntity = new GenericEntity<List<ApplicationEntity>>(applications) {};
         return Response.ok(listGenericEntity).build();
     }
 
@@ -27,7 +27,7 @@ public class ApplicationResource {
     @Path("/{name}")
     @Transactional
     public Response registerApplication(@PathParam("name") final String name) {
-        final Application application = new Application(name, new Date());
+        final ApplicationEntity application = new ApplicationEntity(name, new Date());
         em.persist(application);
         final String response = String.format("Application %s at %s registered", application.getName(), application.getRegistrationTime());
         System.out.println(name);

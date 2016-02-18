@@ -43,7 +43,7 @@
                 <configuration>
                     <mainClass>de.larmic.wildfly.swarm.serviceregistry.Main</mainClass>
                     <properties>
-                        <swarm.http.port>8080</swarm.http.port>
+                        <swarm.http.port>8084</swarm.http.port>
                     </properties>
                 </configuration>
             </plugin>
@@ -62,6 +62,10 @@
         <dependency>
             <groupId>org.wildfly.swarm</groupId>
             <artifactId>jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
         </dependency>
     </dependencies>
 

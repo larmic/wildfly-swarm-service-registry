@@ -5,13 +5,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.Date;
 
-@XmlRootElement
+@XmlRootElement(name = "Application")
 @Entity
 @Table(name = "APPLICATION")
 @NamedQueries({
-        @NamedQuery(name = "Application.findAll", query = "SELECT a FROM Application a")
+        @NamedQuery(name = "Application.findAll", query = "SELECT a FROM ApplicationEntity a")
 })
-public class Application implements Serializable {
+public class ApplicationEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,10 +23,10 @@ public class Application implements Serializable {
     @Column
     private Date registrationTime;
 
-    public Application() {
+    public ApplicationEntity() {
     }
 
-    public Application(String name, Date registrationTime) {
+    public ApplicationEntity(String name, Date registrationTime) {
         this.name = name;
         this.registrationTime = registrationTime;
     }
