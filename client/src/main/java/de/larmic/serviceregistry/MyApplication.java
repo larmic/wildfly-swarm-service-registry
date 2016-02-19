@@ -1,4 +1,4 @@
-package de.larmic.wildfly.swarm.serviceregistry;
+package de.larmic.serviceregistry;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.client.ClientBuilder;

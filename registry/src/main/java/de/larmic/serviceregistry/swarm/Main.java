@@ -1,5 +1,9 @@
-package de.larmic.wildfly.swarm.serviceregistry;
+package de.larmic.serviceregistry.swarm;
 
+import de.larmic.serviceregistry.Registry;
+import de.larmic.serviceregistry.core.ApplicationServiceCore;
+import de.larmic.serviceregistry.model.ApplicationEntity;
+import de.larmic.serviceregistry.resource.ApplicationResource;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.ClassLoaderAsset;
 import org.wildfly.swarm.container.Container;
@@ -38,9 +42,10 @@ public class Main {
 
         JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addClass(ApplicationEntity.class);
+        deployment.addClass(ApplicationServiceCore.class);
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
-        deployment.addClass(MyApplication.class);
+        deployment.addClass(Registry.class);
         deployment.addClass(ApplicationResource.class);
         deployment.addAllDependencies();
 

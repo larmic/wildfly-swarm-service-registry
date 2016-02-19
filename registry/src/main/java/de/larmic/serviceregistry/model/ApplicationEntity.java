@@ -1,21 +1,23 @@
-package de.larmic.wildfly.swarm.serviceregistry;
+package de.larmic.serviceregistry.model;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.Date;
 
 @XmlRootElement(name = "Application")
 @Entity
-@Table(name = "APPLICATION")
+@Table(name = "APPLICATION", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "serverName", "port"}))
 @NamedQueries({
         @NamedQuery(name = "Application.findAll", query = "SELECT a FROM ApplicationEntity a")
 })
 public class ApplicationEntity implements Serializable {
 
+    @XmlTransient
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column(nullable = false)
     private String name;
@@ -32,11 +34,11 @@ public class ApplicationEntity implements Serializable {
     @Column(nullable = false)
     private int port;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -1,4 +1,4 @@
-package de.larmic.wildfly.swarm.serviceregistry;
+package de.larmic.serviceregistry;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
