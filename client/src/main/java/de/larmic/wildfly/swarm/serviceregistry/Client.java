@@ -11,8 +11,4 @@ public class Client {
         System.out.println("dindong");
     }
 
-    public String ding() {
-        return "dong";
-    }
-
 }

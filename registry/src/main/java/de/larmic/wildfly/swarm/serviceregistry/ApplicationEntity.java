@@ -17,19 +17,20 @@ public class ApplicationEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column
+    @Column(nullable = false)
     private String name;
 
     @Column
     private Date registrationTime;
 
-    public ApplicationEntity() {
-    }
+    @Column
+    private Date lastActive;
 
-    public ApplicationEntity(String name, Date registrationTime) {
-        this.name = name;
-        this.registrationTime = registrationTime;
-    }
+    @Column(nullable = false)
+    private String serverName;
+
+    @Column(nullable = false)
+    private int port;
 
     public int getId() {
         return id;
@@ -53,5 +54,29 @@ public class ApplicationEntity implements Serializable {
 
     public void setRegistrationTime(Date registrationTime) {
         this.registrationTime = registrationTime;
+    }
+
+    public Date getLastActive() {
+        return lastActive;
+    }
+
+    public void setLastActive(Date lastActive) {
+        this.lastActive = lastActive;
+    }
+
+    public String getServerName() {
+        return serverName;
+    }
+
+    public void setServerName(String ip) {
+        this.serverName = ip;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 }
