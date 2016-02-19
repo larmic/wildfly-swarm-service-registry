@@ -10,6 +10,7 @@ public class ClientResource {
     @GET
     @Produces("text/plain")
     public String ping() {
+        System.out.println("Ping received");
         return "I am alive!";
     }
 

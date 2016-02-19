@@ -1,6 +1,7 @@
 package de.larmic.serviceregistry.swarm;
 
 import de.larmic.serviceregistry.Registry;
+import de.larmic.serviceregistry.core.ApplicationKeepAliveScheduler;
 import de.larmic.serviceregistry.core.ApplicationServiceCore;
 import de.larmic.serviceregistry.model.ApplicationEntity;
 import de.larmic.serviceregistry.resource.ApplicationResource;
@@ -43,6 +44,7 @@ public class Main {
         JAXRSArchive deployment = ShrinkWrap.create(JAXRSArchive.class);
         deployment.addClass(ApplicationEntity.class);
         deployment.addClass(ApplicationServiceCore.class);
+        deployment.addClass(ApplicationKeepAliveScheduler.class);
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/persistence.xml", Main.class.getClassLoader()), "classes/META-INF/persistence.xml");
         deployment.addAsWebInfResource(new ClassLoaderAsset("META-INF/load.sql", Main.class.getClassLoader()), "classes/META-INF/load.sql");
         deployment.addClass(Registry.class);

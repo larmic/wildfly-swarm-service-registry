@@ -2,19 +2,21 @@ package de.larmic.serviceregistry.core;
 
 import de.larmic.serviceregistry.model.ApplicationEntity;
 
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.ejb.Asynchronous;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import javax.ws.rs.ProcessingException;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 import java.util.Date;
 import java.util.List;
 
-@Named
-@RequestScoped
+@Stateless
 public class ApplicationServiceCore {
 
     @PersistenceContext
@@ -39,6 +41,24 @@ public class ApplicationServiceCore {
         final ApplicationEntity application = em.find(ApplicationEntity.class, applicationId);
         application.setLastActive(new Date());
         return application;
+    }
+
+    @Asynchronous
+    @Transactional
+    public void pingApplication(final long applicationId) {
+        final ApplicationEntity application = em.find(ApplicationEntity.class, applicationId);
+        final String applicationPingUrl = String.format("http://%s:%d/", application.getServerName(), application.getPort());
+
+        System.out.println("ping application " + applicationPingUrl);
+
+        final javax.ws.rs.client.Client client = ClientBuilder.newClient();
+        final WebTarget target = client.target(applicationPingUrl);
+        try {
+            target.request().get();
+        } catch (ProcessingException e) {
+            System.out.println(String.format("application %s seems to be offline. It will be removed from registry.", applicationPingUrl));
+            em.remove(application);
+        }
     }
 
     public List<ApplicationEntity> findAllApplications() {
