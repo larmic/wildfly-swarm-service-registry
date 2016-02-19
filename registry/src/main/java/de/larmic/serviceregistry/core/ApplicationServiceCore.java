@@ -35,8 +35,10 @@ public class ApplicationServiceCore {
     }
 
     @Transactional
-    public void keepAlive(final long applicationId) {
-        em.find(ApplicationEntity.class, applicationId).setLastActive(new Date());
+    public ApplicationEntity keepAlive(final long applicationId) {
+        final ApplicationEntity application = em.find(ApplicationEntity.class, applicationId);
+        application.setLastActive(new Date());
+        return application;
     }
 
     public List<ApplicationEntity> findAllApplications() {

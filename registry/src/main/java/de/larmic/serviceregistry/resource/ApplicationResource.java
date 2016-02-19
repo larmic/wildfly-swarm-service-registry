@@ -5,9 +5,7 @@ import de.larmic.serviceregistry.core.ApplicationServiceCore;
 import de.larmic.serviceregistry.model.ApplicationEntity;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -57,21 +55,26 @@ public class ApplicationResource {
                                    @PathParam("serverName") final String serverName,
                                    @PathParam("port") final int port) {
         final ApplicationEntity application = applicationServiceCore.findApplication(name, serverName, port);
-        return Response.ok(application).build();
+        return application != null ? Response.ok(application).build() : Response.status(404).build();
     }
 
     @PUT
-    @Path("/{name}")
-    public Response registerApplication(@PathParam("name") final String name, @Context HttpServletRequest request) {
-        ApplicationEntity application = applicationServiceCore.findApplication(name, request.getRemoteHost(), request.getRemotePort());
+    @Path("/{name}/{serverName}/{port}")
+    public Response registerApplication(@PathParam("name") final String name,
+                                        @PathParam("serverName") final String serverName,
+                                        @PathParam("port") final int port) {
+        ApplicationEntity application = applicationServiceCore.findApplication(name, serverName, port);
+
+        String response;
 
         if (application == null) {
-            application = applicationServiceCore.createApplication(name, request.getRemoteHost(), request.getRemotePort());
+            application = applicationServiceCore.createApplication(name, serverName, port);
+            response = String.format("Application %s registered at %s; last active at %s", name, serverName, application.getLastActive());
         } else {
-            applicationServiceCore.keepAlive(application.getId());
+            application = applicationServiceCore.keepAlive(application.getId());
+            response = String.format("Application %s already registered at %s; last active at %s", name, serverName, application.getLastActive());
         }
 
-        final String response = String.format("Application %s registered at %s; last active at %s", application.getName(), application.getRegistrationTime(), application.getLastActive());
         return Response.status(200).header("location", createApplicationHeaderLocation(application)).entity(response).build();
     }
 

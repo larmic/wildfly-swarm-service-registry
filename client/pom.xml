@@ -38,6 +38,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <mainClass>de.larmic.serviceregistry.swarm.Main</mainClass>
                     <properties>
                         <swarm.http.port>8081</swarm.http.port>
                     </properties>
